@@ -1,0 +1,32 @@
+{
+	"scripts": {
+		"prettier": "prettier --write .",
+		"eslint": "eslint --ext .ts,.tsx,.js,.jsx --no-error-on-unmatched-pattern",
+		"eslint:fix": "eslint --ext .ts,.tsx,.js,.jsx --no-error-on-unmatched-pattern --quiet --fix",
+		"typecheck": "tsc --noEmit --skipLibCheck",
+		"postinstall": "husky install"
+	},
+	"devDependencies": {
+		"eslint": "^8.30.0",
+		"eslint-config-prettier": "^8.5.0",
+		"husky": "^8.0.2",
+		"prettier": "^2.8.1"
+	},
+	"lint-staged": {
+		"*.{ts,tsx,js,jsx}": [
+			"npm prettier",
+			"npm eslint:fix",
+			"npm typecheck",
+			"git add --force"
+		],
+		"*.{md,json}": [
+			"npm prettier",
+			"git add --force"
+		]
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "npm run lint"
+		}
+	}
+}
