@@ -5,6 +5,7 @@ import Main from './pages/Main';
 import MyPage from './pages/MyPage';
 import LandingPage from './pages/LandingPage';
 import 'antd/dist/antd.css';
+import Test from './pages/Test';
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
         </Route>
         <Route path="/Main">
           <Main/>
+        </Route>
+        <Route path="/Test">
+          <Test/>
         </Route>
     </BrowserRouter>
   );

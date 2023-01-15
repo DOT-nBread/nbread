@@ -50,7 +50,7 @@ const io = require('socket.io')(httpServer, {
 app.use(express.json());
 // app.use(express.static('public'));
 
-app.use(express.static(path.join(__dirname, '../client/build')))
+// app.use(express.static(path.join(__dirname, '../client/build')))
 
 app.use(
   cors({
@@ -80,10 +80,17 @@ app.delete('/contents/:contentId', controllers.boardDelete);
 app.patch('/contents/:contentId', controllers.boardPatch);
 app.get('/contents/:contentId', controllers.boardDetailGet);
 app.get('/contents', controllers.boardGet);
+
+// feature/kakao-payment
+console.log("tttttest")
+app.post('/orders/payment', controllers.orderPayment);
 app.post('/orders/:contentId', controllers.order);
 app.delete('/orders/:contentId', controllers.cancelOrder);
+
 app.post('/users/checkId', controllers.checkId);
 app.post('/users/checkNickname', controllers.checkNickname);
+
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
