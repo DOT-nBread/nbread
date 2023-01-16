@@ -5,10 +5,18 @@ dotenv.config();
 
 module.exports = {
   generateAccessToken: (data) => {
-    return sign(data, process.env.ACCESS_SECRET);
+    return sign(data, process.env.ACCESS_SECRET, {expiresIn: "1h"});
+  },
+  generateRefreshToken: (data) => {
+    return sign(data, process.env.REFRESH_SECRET, { expiresIn: "30d" });
+  },
+  sendRefreshToken: (res, refreshToken) => {
+    res.cookie("nbjwt", refreshToken, {
+      httpOnly: true,
+    });
   },
   sendAccessToken: (res, accessToken) => {
-    res.cookie('nbjwt', accessToken);
+    res.status(200).send({ data: { accessToken }, message: '로그인 성공' });
   },
   isAuthorized: (req, res) => {
 
@@ -24,5 +32,16 @@ module.exports = {
     } catch (err) {
       console.log(err);
     }
-  }
+  },
+  resendAccessToken: (res, accessToken, data) => {
+    res.send({ data: { accessToken, userInfo: data }, message: "accessToken 재발급" });
+  },
+  checkRefeshToken: (refreshToken) => {
+    try {
+      return verify(refreshToken, process.env.REFRESH_SECRET);
+    } catch (err) {
+      // return null if refresh token is not valid
+      return null;
+    }
+  },
 };

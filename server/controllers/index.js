@@ -19,4 +19,7 @@ module.exports = {
 
   // feature/kakao-payment
   orderPayment: require('./orders/paymentTest'),
+
+  // feature/token
+  refreshTokenRequest: require('./users/refreshTokenRequest'),
 };

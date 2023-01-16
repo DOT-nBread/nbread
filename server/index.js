@@ -4,6 +4,7 @@ const https = require('https');
 const express = require('express');
 const cors = require('cors');
 const controllers = require('./controllers');
+const cookieParser = require("cookie-parser");
 const path = require('path');
 const app = express();
 
@@ -64,6 +65,9 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
+// feature/token
+app.use(cookieParser());
+
 
 app.use('/users', controllers.editPicture);
 app.get('/users', controllers.userBoard);
@@ -89,6 +93,9 @@ app.delete('/orders/:contentId', controllers.cancelOrder);
 
 app.post('/users/checkId', controllers.checkId);
 app.post('/users/checkNickname', controllers.checkNickname);
+
+// feature/token
+app.get('/users/refreshtokenrequest', controllers.refreshTokenRequest);
 
 
 app.get('*', (req, res) => {
