@@ -1,8 +1,8 @@
 const { user } = require('../../models');
-const { generateAccessToken, sendAccessToken } = require('../tokenFunctions'); 
+const { generateAccessToken, generateRefreshToken, sendAccessToken, sendRefreshToken } = require('../tokenFunctions'); 
 
 module.exports = (req, res) => {
-
+  console.log(req.body)
   user.findOne({
     where: {
       username: req.body.username,
@@ -21,11 +21,18 @@ module.exports = (req, res) => {
       address: result.dataValues.address,
       phone_number: result.dataValues.phone_number
     };
-    let accessToken = generateAccessToken(userInfo);
+    const accessToken = generateAccessToken(userInfo);
+
+    // feature/token
+    const refreshToken = generateRefreshToken(userInfo);
+    sendRefreshToken(res, refreshToken);
 
     sendAccessToken(res, accessToken);
-    res.status(200).send({ data: userInfo, message: '로그인 성공' });
+
+    // res.status(200).send({ data: { accessToken }, message: '로그인 성공' });
+
   }).catch( (err) => {
+    console.log(err)
     res.status(500).send({ message: '서버 에러' });
   });
 };
