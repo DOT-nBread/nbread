@@ -1,0 +1,39 @@
+{
+	"compilerOptions": {
+		"target": "es6",
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"noEmit": true,
+		"esModuleInterop": true,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"jsx": "preserve",
+		"jsxImportSource": "@emotion/react",
+		"types": ["@emotion/react/types/css-prop", "node"],
+		"typeRoots": ["./@types", "./node_modules/@types"],
+		"incremental": true,
+		"baseUrl": ".",
+		"paths": {
+			"@components/*": ["components/*"],
+			"@pages/*": ["pages/*"],
+			"@styles/*": ["styles/*"],
+			"@utils/*": ["utils/*"],
+			"@types/*": ["types/*"],
+			"@hooks/*": ["hooks/*"],
+			"@public/*": ["public/*"],
+			"@assets/*": ["assets/*"]
+		},
+		"plugins": [
+			{
+				"name": "next"
+			}
+		]
+	},
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "server.js"],
+	"exclude": ["node_modules"]
+}
