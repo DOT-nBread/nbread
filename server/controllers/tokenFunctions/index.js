@@ -20,12 +20,17 @@ module.exports = {
   },
   isAuthorized: (req, res) => {
 
-    let auth = req.headers.cookie;
-    if (!auth) {
+    // let auth = req.headers.cookie;
+    // if (!auth) {
+    //   return null;
+    // }
+
+    const token = req.headers["authorization"];
+    if (!token) {
       return null;
     }
 
-    let token = auth.split(' ')[0].split('=')[1];
+    // let token = auth.split(' ')[0].split('=')[1];
 
     try {
       return verify(token, process.env.ACCESS_SECRET);
