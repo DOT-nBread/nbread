@@ -23,7 +23,6 @@ module.exports = async (req, res) => {
     method: "post",
     url: "https://kapi.kakao.com/v1/payment/ready",
     headers: {
-      // 요거 맞나..?
       "Authorization": "KakaoAK " + process.env.KAKAO_ADMIN_KEY,
       "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
     },
