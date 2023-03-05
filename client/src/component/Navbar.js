@@ -6,111 +6,120 @@ import Login from "../modal/Login";
 import SignUp from "../modal/SignUp";
 import LoginUser from "../component/LoginUser";
 import PWConfirm from "../modal/PWConfirm";
-import { useDispatch, useSelector } from "react-redux";
+import { useUser } from "../shared/hooks/useUser";
 
 function Navbar() {
-  const history = useHistory();
-  const isLogin = useSelector((state) => state.loginReducer.isLogIn);
-  const [LoginModal, setLoginModal] = useState(false);
-  const [SignUpModal, setSignUpModal] = useState(false);
-  const [PWConfirmModal, setPWConfirmModal] = useState(false);
+	const history = useHistory();
+	// const isLogin = useSelector((state) => state.loginReducer.isLogIn);
+	const [LoginModal, setLoginModal] = useState(false);
+	const [SignUpModal, setSignUpModal] = useState(false);
+	const [PWConfirmModal, setPWConfirmModal] = useState(false);
 
-  const handleLoginModal = () => {
-    setSignUpModal(false);
-    setLoginModal(true);
-  };
+	// const [modalStatus, setModalStatus] = useState("");
 
-  const handleSignupModal = () => {
-    setSignUpModal(!SignUpModal);
-    setLoginModal(!LoginModal);
-  };
+	// const handleModal = (status) => {
+	// 	setModalStatus(status);
+	// };
 
-  const handlePWConfirmModal = () => {
-    setPWConfirmModal(true);
-    setLoginModal(false);
-  };
+	const { user } = useUser();
 
-  const handleCloseSignupModal = () => {
-    setSignUpModal(false);
-  };
+	const handleLoginModal = () => {
+		setSignUpModal(false);
+		setLoginModal(true);
+	};
 
-  const handleClosePWConfirm = () => {
-    setPWConfirmModal(false);
-  };
+	const handleSignupModal = () => {
+		setSignUpModal(!SignUpModal);
+		setLoginModal(!LoginModal);
+	};
 
-  const handleMainPage = () => {
-    window.location.replace("/Main");
-  };
-  return (
-    <>
-      <Wrapper>
-        <Logo src={logo} onClick={handleMainPage} />
-        {isLogin ? (
-          <LoginUser setLoginModal={setLoginModal}>로그아웃</LoginUser>
-        ) : (
-          <LoginText onClick={handleLoginModal}>로그인</LoginText>
-        )}
-      </Wrapper>
+	const handlePWConfirmModal = () => {
+		setPWConfirmModal(true);
+		setLoginModal(false);
+	};
 
-      {LoginModal ? (
-        <Login
-          setLoginModal={setLoginModal}
-          handleSignupModal={handleSignupModal}
-          handlePWConfirmModal={handlePWConfirmModal}
-        ></Login>
-      ) : null}
+	const handleCloseSignupModal = () => {
+		setSignUpModal(false);
+	};
 
-      {SignUpModal ? (
-        <SignUp
-          handleCloseSignupModal={handleCloseSignupModal}
-          handleLoginModal={handleLoginModal}
-          setLoginModal={setLoginModal}
-        ></SignUp>
-      ) : null}
+	const handleClosePWConfirm = () => {
+		setPWConfirmModal(false);
+	};
 
-      {PWConfirmModal ? (
-        <PWConfirm
-          handleClosePWConfirm={handleClosePWConfirm}
-          handleLoginModal={handleLoginModal}
-          setLoginModal={setLoginModal}
-        ></PWConfirm>
-      ) : null}
-    </>
-  );
+	const handleMainPage = () => {
+		window.location.replace("/Main");
+	};
+
+	return (
+		<>
+			<Wrapper>
+				<Logo src={logo} onClick={handleMainPage} />
+				{user?.data?.success ? (
+					<LoginUser setLoginModal={setLoginModal}>로그아웃</LoginUser>
+				) : (
+					<LoginText onClick={handleLoginModal}>로그인</LoginText>
+				)}
+			</Wrapper>
+
+			{LoginModal ? (
+				<Login
+					setLoginModal={setLoginModal}
+					handleSignupModal={handleSignupModal}
+					handlePWConfirmModal={handlePWConfirmModal}
+				></Login>
+			) : null}
+
+			{SignUpModal ? (
+				<SignUp
+					handleCloseSignupModal={handleCloseSignupModal}
+					handleLoginModal={handleLoginModal}
+					setLoginModal={setLoginModal}
+				></SignUp>
+			) : null}
+
+			{PWConfirmModal ? (
+				<PWConfirm
+					handleClosePWConfirm={handleClosePWConfirm}
+					handleLoginModal={handleLoginModal}
+					setLoginModal={setLoginModal}
+				></PWConfirm>
+			) : null}
+		</>
+	);
 }
 
 const Wrapper = styled.div`
-  height: 100px;
-  background-color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  z-index: 1;
+	height: 100px;
+	background-color: #ffffff;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	z-index: 1;
 
-  @media (max-width: 576px) {
-    height: 80px;
-  }
+	@media (max-width: 576px) {
+		height: 80px;
+	}
 `;
 
 const Logo = styled.img`
-  width: 80px;
-  margin-top: 10px;
-  margin-left: 20px;
-  &:hover {
-    cursor: pointer;
-  }
-  @media (max-width: 576px) {
-    width: 60px;
-  }
+	width: 80px;
+	margin-top: 10px;
+	margin-left: 20px;
+	&:hover {
+		cursor: pointer;
+	}
+	@media (max-width: 576px) {
+		width: 60px;
+	}
 `;
 
 const LoginText = styled.div`
-margin-right: 2em;
-font-family: var(--main-font);
-&:hover{  
-    cursor: pointer;
-}
-`; 
+	margin-right: 2em;
+	font-family: var(--main-font);
+	&:hover {
+		cursor: pointer;
+	}
+`;
 
 // const Div = styled.div`
 // position: fixed;
